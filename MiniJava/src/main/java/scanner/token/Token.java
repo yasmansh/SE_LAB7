@@ -49,9 +49,8 @@ public class Token {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = getType().hashCode();
-        if (getType() == Type.KEYWORDS) result = prime * result + (getValue() == null ? 0 : getValue().hashCode());
-        return result;
+        return (getType() == Type.KEYWORDS) ?
+                prime * getType().hashCode() + (getValue() == null ? 0 : getValue().hashCode()):getType().hashCode();
     }
 
     public static Type getTyepFormString(String s) {
