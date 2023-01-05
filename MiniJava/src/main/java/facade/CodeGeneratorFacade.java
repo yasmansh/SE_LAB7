@@ -12,8 +12,8 @@ public class CodeGeneratorFacade {
 
     }
 
-    public static CodeGeneratorFacade getCodeGeneratorFacade(){
-        return (codeGeneratorFacade == null)? codeGeneratorFacade = new CodeGeneratorFacade():codeGeneratorFacade;
+    public static CodeGeneratorFacade getCodeGeneratorFacade() {
+        return (codeGeneratorFacade == null) ? codeGeneratorFacade = new CodeGeneratorFacade() : codeGeneratorFacade;
     }
 
     public void printMemory(){

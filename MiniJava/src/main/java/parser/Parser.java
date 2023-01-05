@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Stack;
 
 import Log.Log;
-import codeGenerator.CodeGenerator;
 import facade.CodeGeneratorFacade;
 import errorHandler.ErrorHandler;
 import scanner.lexicalAnalyzer;
