@@ -43,3 +43,36 @@ Shotgun Surgery اشاره کرد.
 
 سوال 3:
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#گزارش:
+Loose coupling: 
+هنگام new کردن تایپ مورد نظر را می سازد اما موقع ساخت خود Field از interface سوپر کلاسش استفاده می کند. 
+برای این کار در کلاس های Memory و ParseTable و Parser و Rule و SymbolTable فیلدی از جنس List ساختیم و فقط موقع new کردن از ArrayList استفاده کردیم.
+
+Separate Query from Modifier:
+در کلاس ParserTable دو متد createTables و createTokens را ساختیم و به این ترتیب متد بزرگتر را به چند متد کوچکتر شکاندیم.
+
+Self Encapsulated Field:
+در کلاس lexicalAnalyzer برای فیلد matcher دو تابع getter و setter را ساختیم و هر جایی که به طور مستقیم این فیلد را تعیین و دریافت می کردیم با این دو تابع جایگزین کردیم. همچنین در فایل Token برای دو فیلد type و value مشابه همین کار را کردیم.
+
+Inline Temp:
+برای این کار باید تابعی را پیدا کنیم که متغیر temp ای را بر اساس عبارت ساده ای set کرده است و همان temp را خروجی می دهد. در نتیجه برای بازآرایی کد می توان عبارت معادلی که بدون استفاده از temp همان جواب را می دهد return کرد.
+در فایل Token برای متد hashcode متغیر result را حذف کردیم.
+
+Facade:
+باید کلاسی را پیدا کنیم که در آن به طور مستقیم وابستگی به کلاس دیگری از پکیج دیگری وجود داشته باشد و باید سعی کنیم از پکیج سومی به نام facade استفاده کنیم که این وابستگی را رفع کرده و از پیچیدگی های تعداد زیادی متد در پروژه های بزرگ جلوگیری کنیم. 
+کلاس های پکیج facade به عنوان واسط بین دو پکیج دیگر عمل می کنند و قابلیت توسعه کد را بیشتر می کنند.
+facade 1:
+وابستگی Parser به کلاس CodeGenerator را حذف کردیم و از CodeGeneratorFacade استفاده کردیم. در این کلاس جدید متد های getCodeGeneratorFacade و createSemantic و printMemory را تعریف کردیم.
+
+facade 2:
+وابستگی فایل SymbolTable برای فیلد mem را از طریق واسط MemoryFacade که ساختیم از بین بردیم. 
+همچنین متد های setMemory و getMemory را در فایل جدید پیاده سازی کردیم.
+
+facade 3:
+برای فیلد lookihead در کلاس Parser به طور مستقیم به کلاس Token وابسته بودیم ولی با ایجاد کلاس TokenFacade در پکیج Facade این مورد را برطرف کردیم.
+همچنین متدهای setToken و getTokenو  getTokenFacade را پیاده سازی کردیم.
+
+
+Facade 
