@@ -9,22 +9,38 @@ public class Token {
     public Type type;
     public String value;
 
-    public Token(Type type, String value) {
-        this.type = type;
+    private String getValue() {
+        return value;
+    }
+
+    private void setValue(String value) {
         this.value = value;
+    }
+
+    private Type getType() {
+        return type;
+    }
+
+    private void setType(Type type) {
+        this.type = type;
+    }
+
+    public Token(Type type, String value) {
+        setType(type);
+        setValue(value);
     }
 
     @Override
     public String toString() {
-        return String.format("(%s,%s)", type.name(), value);
+        return String.format("(%s,%s)", getType().name(), getValue());
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Token) {
             Token temp = (Token) o;
-            if (temp.type == this.type) {
-                return this.type != Type.KEYWORDS || this.value.equals(temp.value);
+            if (temp.getType() == this.getType()) {
+                return this.getType() != Type.KEYWORDS || this.getValue().equals(temp.getValue());
             }
         }
         return false;
@@ -33,8 +49,8 @@ public class Token {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = type.hashCode();
-        if (type == Type.KEYWORDS) result = prime * result + (value == null ? 0 : value.hashCode());
+        int result = getType().hashCode();
+        if (getType() == Type.KEYWORDS) result = prime * result + (getValue() == null ? 0 : getValue().hashCode());
         return result;
     }
 
