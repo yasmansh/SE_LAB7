@@ -12,8 +12,8 @@ import java.util.List;
  */
 
 public class ParseTable {
-    private List<Map<Token, Action>> actionTable;
-    private List<Map<NonTerminal, Integer>> gotoTable;
+    private final List<Map<Token, Action>> actionTable = new ArrayList<>();
+    private final List<Map<NonTerminal, Integer>> gotoTable = new ArrayList<>();
 
     public ParseTable(String jsonTable) throws Exception {
         jsonTable = jsonTable.substring(2, jsonTable.length() - 2);
@@ -22,27 +22,19 @@ public class ParseTable {
         Map<Integer, NonTerminal> nonTerminals = new HashMap<Integer, NonTerminal>();
         Rows[0] = Rows[0].substring(1, Rows[0].length() - 1);
         String[] cols = Rows[0].split("\",\"");
-        for (int i = 1; i < cols.length; i++) {
-            if (cols[i].startsWith("Goto")) {
-                String temp = cols[i].substring(5);
-                try {
-                    nonTerminals.put(i, NonTerminal.valueOf(temp));
-                } catch (Exception e) {
-                    temp = temp;
-                }
-            } else {
-                terminals.put(i, new Token(Token.getTyepFormString(cols[i]), cols[i]));
-            }
-        }
-        actionTable = new ArrayList<Map<Token, Action>>();
-        gotoTable = new ArrayList<Map<NonTerminal, Integer>>();
-        for (int i = 1; i < Rows.length; i++) {
+        createTokens(terminals, nonTerminals, cols);
+        createTables(Rows, terminals, nonTerminals);
+    }
+
+    private void createTables(String[] rows, Map<Integer, Token> terminals, Map<Integer, NonTerminal> nonTerminals) throws Exception {
+        String[] cols;
+        for (int i = 1; i < rows.length; i++) {
             if (i == 100) {
                 int a = 1;
                 a++;
             }
-            Rows[i] = Rows[i].substring(1, Rows[i].length() - 1);
-            cols = Rows[i].split("\",\"");
+            rows[i] = rows[i].substring(1, rows[i].length() - 1);
+            cols = rows[i].split("\",\"");
             actionTable.add(new HashMap<Token, Action>());
             gotoTable.add(new HashMap<>());
             for (int j = 1; j < cols.length; j++) {
@@ -63,6 +55,21 @@ public class ParseTable {
                         throw new Exception();
                     }
                 }
+            }
+        }
+    }
+
+    private void createTokens(Map<Integer, Token> terminals, Map<Integer, NonTerminal> nonTerminals, String[] cols) {
+        for (int i = 1; i < cols.length; i++) {
+            if (cols[i].startsWith("Goto")) {
+                String temp = cols[i].substring(5);
+                try {
+                    nonTerminals.put(i, NonTerminal.valueOf(temp));
+                } catch (Exception e) {
+                    temp = temp;
+                }
+            } else {
+                terminals.put(i, new Token(Token.getTyepFormString(cols[i]), cols[i]));
             }
         }
     }
